@@ -92,10 +92,10 @@ class OperadoraAutorizacoes extends Nullstack {
                 <td class="px-4 py-3">
                   <span
                     class={`px-2 py-1 rounded text-xs ${autorizacao.status === 'Aprovada'
-                        ? 'bg-green-900 text-green-300'
-                        : autorizacao.status === 'Negada'
-                          ? 'bg-red-900 text-red-300'
-                          : 'bg-yellow-900 text-yellow-300'
+                      ? 'bg-green-900 text-green-300'
+                      : autorizacao.status === 'Negada'
+                        ? 'bg-red-900 text-red-300'
+                        : 'bg-yellow-900 text-yellow-300'
                       }`}
                   >
                     {autorizacao.status}

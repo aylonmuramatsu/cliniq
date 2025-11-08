@@ -52,8 +52,8 @@ class OperadoraConfiguracoes extends Nullstack {
                 <td class="px-4 py-3">
                   <span
                     class={`px-2 py-1 rounded text-xs ${usuario.status === 'Ativo'
-                        ? 'bg-green-900 text-green-300'
-                        : 'bg-gray-700 text-gray-300'
+                      ? 'bg-green-900 text-green-300'
+                      : 'bg-gray-700 text-gray-300'
                       }`}
                   >
                     {usuario.status}
