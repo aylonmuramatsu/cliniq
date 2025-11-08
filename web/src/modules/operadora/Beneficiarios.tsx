@@ -1,8 +1,8 @@
-import { Button } from '@insightcreativewebs/ui'
+
 import Nullstack, { type NullstackClientContext } from 'nullstack'
 import Card from '../../components/UI/Card'
 import Input from '../../components/UI/Input'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class OperadoraBeneficiarios extends Nullstack {
   filterStatus = 'todos'
@@ -60,7 +60,6 @@ class OperadoraBeneficiarios extends Nullstack {
     })
 
     return (
-
       <div class="space-y-6">
         {/* Filtros */}
         <Card>
@@ -72,11 +71,13 @@ class OperadoraBeneficiarios extends Nullstack {
               oninput={this.handleSearchInput}
             />
             <div>
-              <label class="block text-sm font-medium mb-2">Status</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Status
+              </label>
               <select
                 value={this.filterStatus}
                 onchange={this.handleStatusChange}
-                class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               >
                 <option value="todos">Todos</option>
                 <option value="ativo">Ativo</option>
@@ -88,48 +89,56 @@ class OperadoraBeneficiarios extends Nullstack {
         </Card>
 
         {/* Tabela */}
-        <Card>
-          <Table
-            headers={['Nome', 'CPF', 'Plano', 'Validade', 'Status', 'Ações']}
-          >
-            {filteredBeneficiarios.map((beneficiario) => (
-              <tr class="hover:bg-gray-700 transition-colors">
-                <td class="px-4 py-3 font-medium">{beneficiario.nome}</td>
-                <td class="px-4 py-3">{beneficiario.cpf}</td>
-                <td class="px-4 py-3">{beneficiario.plano}</td>
-                <td class="px-4 py-3">{beneficiario.validade}</td>
-                <td class="px-4 py-3">
-                  <span
-                    class={`px-2 py-1 rounded text-xs ${beneficiario.status === 'Ativo'
-                      ? 'bg-green-900 text-green-300'
-                      : beneficiario.status === 'Inadimplente'
-                        ? 'bg-red-900 text-red-300'
-                        : 'bg-gray-700 text-gray-300'
-                      }`}
-                  >
-                    {beneficiario.status}
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <div class="flex gap-2">
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      Ver
-                    </Button>
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      {beneficiario.status === 'Ativo'
-                        ? 'Suspender'
-                        : 'Ativar'}
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </Table>
-        </Card>
+        <Table
+          columns={columns}
+          data={filteredBeneficiarios}
+        />
       </div>
-
     )
   }
 }
 
+const columns = [
+  { key: 'nome', label: 'Nome', content: (row) => <div class="font-medium text-gray-900">{row.nome}</div> },
+  { key: 'cpf', label: 'CPF', content: (row) => <div class="text-sm text-gray-600 font-mono">{row.cpf}</div> },
+  { key: 'plano', label: 'Plano', content: (row) => <div class="text-sm text-gray-900">{row.plano}</div> },
+  { key: 'validade', label: 'Validade', content: (row) => <div class="text-sm text-gray-600">{row.validade}</div> },
+  {
+    key: 'status',
+    label: 'Status',
+    content: (row) => (
+      <span
+        class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${row.status === 'Ativo'
+          ? 'bg-green-100 text-green-800'
+          : row.status === 'Inadimplente'
+            ? 'bg-red-100 text-red-800'
+            : 'bg-gray-100 text-gray-800'
+          }`}
+      >
+        {row.status}
+      </span>
+    ),
+  },
+  {
+    key: 'acoes',
+    label: 'Ações',
+    content: (row) => (
+      <div class="flex items-center gap-2">
+        <button
+          class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          onclick={() => { }}
+        >
+          Ver
+        </button>
+        <span class="text-gray-300">|</span>
+        <button
+          class="text-xs text-gray-600 hover:text-gray-900 font-medium transition-colors"
+          onclick={() => { }}
+        >
+          {row.status === 'Ativo' ? 'Suspender' : 'Ativar'}
+        </button>
+      </div>
+    ),
+  },
+]
 export default OperadoraBeneficiarios

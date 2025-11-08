@@ -1,7 +1,7 @@
 import { Button } from '@insightcreativewebs/ui'
 import Nullstack, { type NullstackClientContext } from 'nullstack'
 import Card from '../../components/UI/Card'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class OperadoraPlanos extends Nullstack {
   showCreateModal = false
@@ -53,45 +53,49 @@ class OperadoraPlanos extends Nullstack {
           <Button onclick={this.toggleCreateModal}>+ Criar Plano</Button>
         </div>
 
-        <Card>
-          <Table
-            headers={[
-              'Nome',
-              'Mensalidade',
-              'Status',
-              'Beneficiários',
-              'Ações',
-            ]}
-          >
-            {planos.map((plano) => (
-              <tr class="hover:bg-gray-700 transition-colors">
-                <td class="px-4 py-3 font-medium">{plano.nome}</td>
-                <td class="px-4 py-3">{plano.mensalidade}</td>
-                <td class="px-4 py-3">
-                  <span
-                    class={`px-2 py-1 rounded text-xs ${plano.status === 'Ativo'
-                      ? 'bg-green-900 text-green-300'
-                      : 'bg-gray-700 text-gray-300'
-                      }`}
+        <Table
+          columns={[
+            { key: 'nome', label: 'Nome', content: (row) => <div class="font-medium text-gray-900">{row.nome}</div> },
+            { key: 'mensalidade', label: 'Mensalidade', content: (row) => <div class="text-sm text-gray-900 font-semibold">{row.mensalidade}</div> },
+            {
+              key: 'status',
+              label: 'Status',
+              content: (row) => (
+                <span
+                  class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${row.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}
+                >
+                  {row.status}
+                </span>
+              ),
+            },
+            { key: 'beneficiarios', label: 'Beneficiários', content: (row) => <div class="text-sm text-gray-600">{row.beneficiarios}</div> },
+            {
+              key: 'acoes',
+              label: 'Ações',
+              align: "right",
+              content: (row) => (
+                <div class="flex items-center gap-2 justify-end">
+                  <Button
+                    color="info"
+                    variant="ghost"
+                    onclick={() => { }}
                   >
-                    {plano.status}
-                  </span>
-                </td>
-                <td class="px-4 py-3">{plano.beneficiarios}</td>
-                <td class="px-4 py-3">
-                  <div class="flex gap-2">
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      Editar
-                    </Button>
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      {plano.status === 'Ativo' ? 'Desativar' : 'Ativar'}
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </Table>
-        </Card>
+                    Editar
+                  </Button>
+                  <Button
+                    color="danger"
+                    variant="ghost"
+                    onclick={() => { }}
+                  >
+                    {row.status === 'Ativo' ? 'Desativar' : 'Ativar'}
+                  </Button>
+                </div>
+              ),
+            },
+          ]}
+          data={planos}
+        />
 
         {/* Modal de Criar Plano */}
         {this.showCreateModal && (

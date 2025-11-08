@@ -1,7 +1,7 @@
 import { Button } from '@insightcreativewebs/ui'
 import Nullstack, { type NullstackClientContext } from 'nullstack'
 import Card from '../../components/UI/Card'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class OperadoraAutorizacoes extends Nullstack {
   filterStatus = 'aguardando'
@@ -70,58 +70,62 @@ class OperadoraAutorizacoes extends Nullstack {
         </Card>
 
         {/* Tabela */}
-        <Card>
-          <Table
-            headers={[
-              'Paciente',
-              'Clínica',
-              'Procedimento',
-              'Data',
-              'Valor',
-              'Status',
-              'Ações',
-            ]}
-          >
-            {filteredAutorizacoes.map((autorizacao) => (
-              <tr class="hover:bg-gray-700 transition-colors">
-                <td class="px-4 py-3 font-medium">{autorizacao.paciente}</td>
-                <td class="px-4 py-3">{autorizacao.clinica}</td>
-                <td class="px-4 py-3">{autorizacao.procedimento}</td>
-                <td class="px-4 py-3">{autorizacao.data}</td>
-                <td class="px-4 py-3">{autorizacao.valor}</td>
-                <td class="px-4 py-3">
-                  <span
-                    class={`px-2 py-1 rounded text-xs ${autorizacao.status === 'Aprovada'
-                      ? 'bg-green-900 text-green-300'
-                      : autorizacao.status === 'Negada'
-                        ? 'bg-red-900 text-red-300'
-                        : 'bg-yellow-900 text-yellow-300'
-                      }`}
+        <Table
+          columns={[
+            { key: 'paciente', label: 'Paciente', content: (row) => <div class="font-medium text-gray-900">{row.paciente}</div> },
+            { key: 'clinica', label: 'Clínica', content: (row) => <div class="text-sm text-gray-600">{row.clinica}</div> },
+            { key: 'procedimento', label: 'Procedimento', content: (row) => <div class="text-sm text-gray-900">{row.procedimento}</div> },
+            { key: 'data', label: 'Data', content: (row) => <div class="text-sm text-gray-600">{row.data}</div> },
+            { key: 'valor', label: 'Valor', content: (row) => <div class="text-sm text-gray-900 font-semibold">{row.valor}</div> },
+            {
+              key: 'status',
+              label: 'Status',
+              content: (row) => (
+                <span
+                  class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                    row.status === 'Aprovada'
+                      ? 'bg-green-100 text-green-800'
+                      : row.status === 'Negada'
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-amber-100 text-amber-800'
+                  }`}
+                >
+                  {row.status}
+                </span>
+              ),
+            },
+            {
+              key: 'acoes',
+              label: 'Ações',
+              content: (row) =>
+                row.status === 'Aguardando' ? (
+                  <div class="flex items-center gap-2">
+                    <button
+                      class="text-xs text-green-600 hover:text-green-700 font-medium transition-colors"
+                      onclick={() => {}}
+                    >
+                      Aprovar
+                    </button>
+                    <span class="text-gray-300">|</span>
+                    <button
+                      class="text-xs text-red-600 hover:text-red-700 font-medium transition-colors"
+                      onclick={() => {}}
+                    >
+                      Recusar
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    onclick={() => {}}
                   >
-                    {autorizacao.status}
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  {autorizacao.status === 'Aguardando' && (
-                    <div class="flex gap-2">
-                      <Button size="sm" onclick={() => { }}>
-                        Aprovar
-                      </Button>
-                      <Button size="sm" variant="secondary" onclick={() => { }}>
-                        Recusar
-                      </Button>
-                    </div>
-                  )}
-                  {autorizacao.status !== 'Aguardando' && (
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      Ver Detalhes
-                    </Button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </Table>
-        </Card>
+                    Ver Detalhes
+                  </button>
+                ),
+            },
+          ]}
+          data={filteredAutorizacoes}
+        />
       </div>
     )
   }

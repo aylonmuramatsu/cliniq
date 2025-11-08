@@ -1,7 +1,7 @@
 import Nullstack, { type NullstackClientContext } from 'nullstack'
 import Card from '../../components/UI/Card'
 import Input from '../../components/UI/Input'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class OperadoraAtendimentos extends Nullstack {
   searchTerm = ''
@@ -80,37 +80,33 @@ class OperadoraAtendimentos extends Nullstack {
         </Card>
 
         {/* Tabela */}
-        <Card>
-          <Table
-            headers={[
-              'Paciente',
-              'Clínica',
-              'Procedimento',
-              'Data',
-              'Status',
-              'Ações',
-            ]}
-          >
-            {filteredAtendimentos.map((atendimento) => (
-              <tr class="hover:bg-gray-700 transition-colors">
-                <td class="px-4 py-3 font-medium">{atendimento.paciente}</td>
-                <td class="px-4 py-3">{atendimento.clinica}</td>
-                <td class="px-4 py-3">{atendimento.procedimento}</td>
-                <td class="px-4 py-3">{atendimento.data}</td>
-                <td class="px-4 py-3">
-                  <span class="px-2 py-1 rounded text-xs bg-green-900 text-green-300">
-                    {atendimento.status}
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <button class="text-blue-400 hover:text-blue-300 text-sm">
-                    Ver Detalhes
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </Table>
-        </Card>
+        <Table
+          columns={[
+            { key: 'paciente', label: 'Paciente', content: (row) => <div class="font-medium text-gray-900">{row.paciente}</div> },
+            { key: 'clinica', label: 'Clínica', content: (row) => <div class="text-sm text-gray-600">{row.clinica}</div> },
+            { key: 'procedimento', label: 'Procedimento', content: (row) => <div class="text-sm text-gray-900">{row.procedimento}</div> },
+            { key: 'data', label: 'Data', content: (row) => <div class="text-sm text-gray-600">{row.data}</div> },
+            {
+              key: 'status',
+              label: 'Status',
+              content: (row) => (
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  {row.status}
+                </span>
+              ),
+            },
+            {
+              key: 'acoes',
+              label: 'Ações',
+              content: () => (
+                <button class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                  Ver Detalhes
+                </button>
+              ),
+            },
+          ]}
+          data={filteredAtendimentos}
+        />
       </div>
     )
   }

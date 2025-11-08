@@ -1,7 +1,7 @@
 import Nullstack, { NullstackClientContext } from 'nullstack'
 import MainLayout from '../../components/Layout/MainLayout'
 import Card from '../../components/UI/Card'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class ClinicaRepasses extends Nullstack {
   prepare({ page }: NullstackClientContext) {
@@ -45,47 +45,46 @@ class ClinicaRepasses extends Nullstack {
         <div class="space-y-6">
           <Card>
             <div class="mb-4">
-              <h3 class="text-lg font-semibold mb-2">Resumo</h3>
+              <h3 class="text-sm font-semibold mb-3 text-gray-900">Resumo</h3>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-4 bg-gray-700 rounded-lg">
-                  <p class="text-gray-400 text-sm mb-1">Total Pendente</p>
-                  <p class="text-2xl font-bold text-yellow-400">R$ 15.230,00</p>
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p class="text-amber-700 text-xs font-medium mb-1">Total Pendente</p>
+                  <p class="text-xl font-bold text-amber-900">R$ 15.230,00</p>
                 </div>
-                <div class="p-4 bg-gray-700 rounded-lg">
-                  <p class="text-gray-400 text-sm mb-1">Total Recebido (Mês)</p>
-                  <p class="text-2xl font-bold text-green-400">R$ 12.450,00</p>
+                <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <p class="text-green-700 text-xs font-medium mb-1">Total Recebido (Mês)</p>
+                  <p class="text-xl font-bold text-green-900">R$ 12.450,00</p>
                 </div>
-                <div class="p-4 bg-gray-700 rounded-lg">
-                  <p class="text-gray-400 text-sm mb-1">Total Geral</p>
-                  <p class="text-2xl font-bold">R$ 41.480,00</p>
+                <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                  <p class="text-gray-700 text-xs font-medium mb-1">Total Geral</p>
+                  <p class="text-xl font-bold text-gray-900">R$ 41.480,00</p>
                 </div>
               </div>
             </div>
           </Card>
 
-          <Card>
-            <Table headers={['Mês', 'Procedimentos', 'Valor Total', 'Status', 'Data Pagamento']}>
-              {repasses.map((repasse) => (
-                <tr class="hover:bg-gray-700 transition-colors">
-                  <td class="px-4 py-3 font-medium">{repasse.mes}</td>
-                  <td class="px-4 py-3">{repasse.procedimentos}</td>
-                  <td class="px-4 py-3 font-semibold">{repasse.valorTotal}</td>
-                  <td class="px-4 py-3">
-                    <span
-                      class={`px-2 py-1 rounded text-xs ${
-                        repasse.status === 'Pago'
-                          ? 'bg-green-900 text-green-300'
-                          : 'bg-yellow-900 text-yellow-300'
-                      }`}
-                    >
-                      {repasse.status}
-                    </span>
-                  </td>
-                  <td class="px-4 py-3">{repasse.dataPagamento}</td>
-                </tr>
-              ))}
-            </Table>
-          </Card>
+          <Table
+            columns={[
+              { key: 'mes', label: 'Mês', content: (row) => <div class="font-medium text-gray-900">{row.mes}</div> },
+              { key: 'procedimentos', label: 'Procedimentos', content: (row) => <div class="text-sm text-gray-900">{row.procedimentos}</div> },
+              { key: 'valorTotal', label: 'Valor Total', content: (row) => <div class="text-sm text-gray-900 font-semibold">{row.valorTotal}</div> },
+              {
+                key: 'status',
+                label: 'Status',
+                content: (row) => (
+                  <span
+                    class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                      row.status === 'Pago' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'
+                    }`}
+                  >
+                    {row.status}
+                  </span>
+                ),
+              },
+              { key: 'dataPagamento', label: 'Data Pagamento', content: (row) => <div class="text-sm text-gray-600">{row.dataPagamento}</div> },
+            ]}
+            data={repasses}
+          />
         </div>
       </MainLayout>
     )

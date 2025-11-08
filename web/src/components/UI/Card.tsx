@@ -10,10 +10,10 @@ class Card extends Nullstack<CardProps> {
   render({ title, children, class: className }: NullstackClientContext<CardProps>) {
     return (
       <div
-        class={`bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 p-6 ${className || ''}`}
+        class={`bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 p-4 ${className || ''}`}
       >
         {title && (
-          <h3 class="text-lg font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-100">
+          <h3 class="text-sm font-semibold text-gray-900 mb-3 pb-2 border-b border-gray-100">
             {title}
           </h3>
         )}

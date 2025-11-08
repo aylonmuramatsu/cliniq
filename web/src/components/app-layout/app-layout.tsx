@@ -10,19 +10,15 @@ export class AppLayout extends Nullstack {
   }
   render({ children, page }) {
     return (
-      <div class="min-h-screen bg-gray-50 text-gray-900">
-        <Header />
+      <div class="min-h-screen bg-gray-50">
         <div class="flex">
           <Sidebar />
-          <main class="flex-1 min-h-screen bg-gray-50">
-            <div class="p-8">
-              <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">{page.title}</h2>
-                <div class="h-1 w-16 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full"></div>
-              </div>
+          <div class="flex-1 flex flex-col min-h-screen">
+            <Header />
+            <main class="flex-1 bg-gray-50 p-4">
               {children}
-            </div>
-          </main>
+            </main>
+          </div>
         </div>
       </div>
     )

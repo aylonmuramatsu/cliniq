@@ -1,7 +1,7 @@
 import { Button } from '@insightcreativewebs/ui'
 import Nullstack, { type NullstackClientContext } from 'nullstack'
 import Card from '../../components/UI/Card'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class OperadoraRepasses extends Nullstack {
   prepare({ page }: NullstackClientContext) {
@@ -58,49 +58,48 @@ class OperadoraRepasses extends Nullstack {
           </div>
         </Card>
 
-        <Card>
-          <Table
-            headers={[
-              'Clínica',
-              'Mês',
-              'Procedimentos',
-              'Valor Total',
-              'Status',
-              'Ações',
-            ]}
-          >
-            {repasses.map((repasse) => (
-              <tr class="hover:bg-gray-700 transition-colors">
-                <td class="px-4 py-3 font-medium">{repasse.clinica}</td>
-                <td class="px-4 py-3">{repasse.mes}</td>
-                <td class="px-4 py-3">{repasse.procedimentos}</td>
-                <td class="px-4 py-3 font-semibold">{repasse.valorTotal}</td>
-                <td class="px-4 py-3">
-                  <span
-                    class={`px-2 py-1 rounded text-xs ${repasse.status === 'Pago'
-                      ? 'bg-green-900 text-green-300'
-                      : 'bg-yellow-900 text-yellow-300'
-                      }`}
+        <Table
+          columns={[
+            { key: 'clinica', label: 'Clínica', content: (row) => <div class="font-medium text-gray-900">{row.clinica}</div> },
+            { key: 'mes', label: 'Mês', content: (row) => <div class="text-sm text-gray-600">{row.mes}</div> },
+            { key: 'procedimentos', label: 'Procedimentos', content: (row) => <div class="text-sm text-gray-900">{row.procedimentos}</div> },
+            { key: 'valorTotal', label: 'Valor Total', content: (row) => <div class="text-sm text-gray-900 font-semibold">{row.valorTotal}</div> },
+            {
+              key: 'status',
+              label: 'Status',
+              content: (row) => (
+                <span
+                  class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                    row.status === 'Pago' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'
+                  }`}
+                >
+                  {row.status}
+                </span>
+              ),
+            },
+            {
+              key: 'acoes',
+              label: 'Ações',
+              content: (row) =>
+                row.status === 'Pendente' ? (
+                  <button
+                    class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    onclick={() => {}}
                   >
-                    {repasse.status}
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  {repasse.status === 'Pendente' && (
-                    <Button size="sm" onclick={() => { }}>
-                      Marcar como Pago
-                    </Button>
-                  )}
-                  {repasse.status === 'Pago' && (
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      Ver Extrato
-                    </Button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </Table>
-        </Card>
+                    Marcar como Pago
+                  </button>
+                ) : (
+                  <button
+                    class="text-xs text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                    onclick={() => {}}
+                  >
+                    Ver Extrato
+                  </button>
+                ),
+            },
+          ]}
+          data={repasses}
+        />
       </div>
     )
   }

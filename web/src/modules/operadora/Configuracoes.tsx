@@ -1,7 +1,7 @@
 import { Button } from '@insightcreativewebs/ui'
 import Nullstack, { type NullstackClientContext } from 'nullstack'
 import Card from '../../components/UI/Card'
-import Table from '../../components/UI/Table'
+import Table from '../../components/UI/table'
 
 class OperadoraConfiguracoes extends Nullstack {
   prepare({ page }: NullstackClientContext) {
@@ -42,37 +42,48 @@ class OperadoraConfiguracoes extends Nullstack {
           <Button onclick={() => { }}>+ Adicionar Usuário</Button>
         </div>
 
-        <Card>
-          <Table headers={['Nome', 'E-mail', 'Função', 'Status', 'Ações']}>
-            {usuarios.map((usuario) => (
-              <tr class="hover:bg-gray-700 transition-colors">
-                <td class="px-4 py-3 font-medium">{usuario.nome}</td>
-                <td class="px-4 py-3">{usuario.email}</td>
-                <td class="px-4 py-3">{usuario.role}</td>
-                <td class="px-4 py-3">
-                  <span
-                    class={`px-2 py-1 rounded text-xs ${usuario.status === 'Ativo'
-                      ? 'bg-green-900 text-green-300'
-                      : 'bg-gray-700 text-gray-300'
-                      }`}
+        <Table
+          columns={[
+            { key: 'nome', label: 'Nome', content: (row) => <div class="font-medium text-gray-900">{row.nome}</div> },
+            { key: 'email', label: 'E-mail', content: (row) => <div class="text-sm text-gray-600">{row.email}</div> },
+            { key: 'role', label: 'Função', content: (row) => <div class="text-sm text-gray-900">{row.role}</div> },
+            {
+              key: 'status',
+              label: 'Status',
+              content: (row) => (
+                <span
+                  class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                    row.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                  }`}
+                >
+                  {row.status}
+                </span>
+              ),
+            },
+            {
+              key: 'acoes',
+              label: 'Ações',
+              content: (row) => (
+                <div class="flex items-center gap-2">
+                  <button
+                    class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    onclick={() => {}}
                   >
-                    {usuario.status}
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <div class="flex gap-2">
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      Editar
-                    </Button>
-                    <Button size="sm" variant="secondary" onclick={() => { }}>
-                      {usuario.status === 'Ativo' ? 'Desativar' : 'Ativar'}
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </Table>
-        </Card>
+                    Editar
+                  </button>
+                  <span class="text-gray-300">|</span>
+                  <button
+                    class="text-xs text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                    onclick={() => {}}
+                  >
+                    {row.status === 'Ativo' ? 'Desativar' : 'Ativar'}
+                  </button>
+                </div>
+              ),
+            },
+          ]}
+          data={usuarios}
+        />
       </div>
     )
   }
