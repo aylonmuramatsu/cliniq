@@ -5,14 +5,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
     "nullstack": "~0.20.0",
-    "tailwindcss": "^4.1.13",
-    "postcss-loader": "^8.2.0",
     "postcss": "^8.5.6",
-    "@tailwindcss/postcss": "^4.1.13"
+    "postcss-loader": "^8.2.0",
+    "tailwindcss": "^4.1.13"
   },
   "scripts": {
-    "start": "npx nullstack start",
+    "dev": "npx nullstack start",
     "build": "npx nullstack build"
+  },
+  "dependencies": {
+    "@insightcreativewebs/ui": "^1.2.0",
+    "@insightcreativewebs/utils": "^1.2.0"
   }
 }

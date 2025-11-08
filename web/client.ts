@@ -1,4 +1,4 @@
-import Nullstack, { NullstackClientContext } from 'nullstack'
+import Nullstack, { type NullstackClientContext } from 'nullstack'
 
 import Application from './src/Application'
 

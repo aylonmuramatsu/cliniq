@@ -1,8 +1,7 @@
-// src/server.ts
-import { Application, defineEnv } from '@insightcreativewebs/api';
-import dotenv from 'dotenv';
+import { Application, defineEnv } from '@insightcreativewebs/api'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 // ✨ Define schema de variáveis de ambiente
 export const envSchema = defineEnv({
@@ -50,7 +49,8 @@ export const envSchema = defineEnv({
   LOG_DIRECTORY: {
     type: 'string',
     default: 'logs',
-    description: 'Diretório onde os logs serão salvos (quando persist mode incluir file)',
+    description:
+      'Diretório onde os logs serão salvos (quando persist mode incluir file)',
     group: 'Logger',
   },
   MAX_MEMORY_LOGS: {
@@ -65,7 +65,8 @@ export const envSchema = defineEnv({
     type: 'enum',
     values: ['none', 'all', 'errors'],
     default: 'all',
-    description: 'Nível de log de requisições: none (desliga), all (todas), errors (apenas erros)',
+    description:
+      'Nível de log de requisições: none (desliga), all (todas), errors (apenas erros)',
     group: 'Request Logging',
   },
 
@@ -101,18 +102,18 @@ export const envSchema = defineEnv({
   //   description: 'Senha do banco de dados',
   //   group: 'Database',
   // },
-});
+})
 
 // ✨ Cria aplicação
 const app = new Application({
   envSchema,
   timezone: 'America/Sao_Paulo',
-});
+})
 
 app.start().catch((error) => {
-  console.error('Failed to start application:', error);
-  process.exit(1);
-});
+  console.error('Failed to start application:', error)
+  process.exit(1)
+})
 
-process.on('SIGTERM', () => app.stop());
-process.on('SIGINT', () => app.stop());
+process.on('SIGTERM', () => app.stop())
+process.on('SIGINT', () => app.stop())

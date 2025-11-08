@@ -1,6 +1,7 @@
-import Nullstack, { NullstackServerContext } from 'nullstack'
+import { Button } from '@insightcreativewebs/ui'
 
 import * as fs from 'fs'
+import Nullstack, { type NullstackServerContext } from 'nullstack'
 import * as path from 'path'
 
 interface Counter {
@@ -13,7 +14,6 @@ interface SetCountProps {
 }
 
 class Counter extends Nullstack {
-
   count = 0
 
   static async getDatabaseFile(context?: NullstackServerContext) {
@@ -23,7 +23,7 @@ class Counter extends Nullstack {
   }
 
   static async getCount() {
-    const databaseFile = await this.getDatabaseFile()
+    const databaseFile = await Counter.getDatabaseFile()
     if (fs.existsSync(databaseFile)) {
       const json = fs.readFileSync(databaseFile, 'utf-8')
       return JSON.parse(json).count
@@ -36,7 +36,7 @@ class Counter extends Nullstack {
   }
 
   static async setCount({ count }) {
-    const databaseFile = await this.getDatabaseFile()
+    const databaseFile = await Counter.getDatabaseFile()
     const json = JSON.stringify({ count })
     return fs.writeFileSync(databaseFile, json)
   }
@@ -47,13 +47,8 @@ class Counter extends Nullstack {
   }
 
   render() {
-    return (
-      <button onclick={this.increment} class="bg-pink-700 text-white py-4 w-full mt-4">
-        this.count = {this.count}
-      </button>
-    )
+    return <Button onclick={this.increment}>this.count = {this.count}</Button>
   }
-
 }
 
 export default Counter
