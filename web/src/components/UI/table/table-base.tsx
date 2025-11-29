@@ -2,6 +2,7 @@ import Nullstack from 'nullstack'
 
 import { twMerge } from 'tailwind-merge'
 
+import { ChevronDown, ChevronRight } from '@insightcreativewebs/ui/lucide-icons'
 import { TableBody } from './table-body'
 import { TableHeader } from './table-thead'
 
@@ -16,6 +17,14 @@ const defaultValues = {
   onrowclick: undefined,
 }
 export class TableBase extends Nullstack {
+  expanded = []
+  on_expand(context){
+    const { 'row-index': row_index } = context;
+    if(!this.expanded.includes(row_index))
+      this.expanded.push(row_index)
+    else this.expanded = Array.from(this.expanded).filter(x => x !== row_index)
+
+  }
   render(context) {
     const {
       data: rows,
@@ -25,8 +34,13 @@ export class TableBase extends Nullstack {
       loading,
       'empty-message': empty_message,
       'loading-message': loading_message,
+      'expand-content': expand_content,
       onrowclick,
     } = Object.assign({}, defaultValues, context)
+
+    const isRowExpanded = (id) => {
+      return this.expanded.includes(id)
+    }
 
     const classes = [
       size === 'sm' && 'text-sm',
@@ -45,9 +59,11 @@ export class TableBase extends Nullstack {
               )}
               {columns.map((column) => (
                 <th
-                  class={`px-6 py-3 text-${column.align || 'left'
-                    } text-xs font-medium text-gray-500 uppercase tracking-wider ${column.width ? `w-${column.width}` : ''
-                    }`}
+                  class={`px-6 py-3 text-${
+                    column.align || 'left'
+                  } text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                    column.width ? `w-${column.width}` : ''
+                  } ${column?.className || ''}`}
                 >
                   {column.label}
                 </th>
@@ -78,7 +94,7 @@ export class TableBase extends Nullstack {
                 </td>
               </tr>
             )}
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <>
                 <tr
                   class={`${expandable || onrowclick ? 'cursor-pointer hover:bg-gray-50 transition' : ''}`}
@@ -86,12 +102,12 @@ export class TableBase extends Nullstack {
                   // aria-expanded={expandable ? isRowExpanded(row.id) : undefined}
                   tabindex={expandable || onrowclick ? 0 : undefined}
                 >
-                  {/* {expandable && (
-                    <td class="px-6 py-4 whitespace-nowrap text-sm" onclick={({ event }) => handleExpand(row, event)}>
-                      {!isRowExpanded(row.id) && <ChevronRight class="w-4 h-4" />}
-                      {isRowExpanded(row.id) && <ChevronDown class="w-4 h-4" />}
+                  {expandable && (
+                    <td class="px-6 py-4 whitespace-nowrap text-sm" row-index={index} row-data={row}  onclick={this.on_expand}>
+                      {!isRowExpanded(index) && <ChevronRight class="w-4 h-4" />}
+                      {isRowExpanded(index) && <ChevronDown class="w-4 h-4" />}
                     </td>
-                  )} */}
+                  )}
                   {columns.map((column) => (
                     <td
                       class={twMerge(
@@ -105,13 +121,13 @@ export class TableBase extends Nullstack {
                     </td>
                   ))}
                 </tr>
-                {/* {expandable && isRowExpanded(row.id) && expanded_content && (
+                {expandable && isRowExpanded(index) && expand_content && (
                   <tr>
                     <td colSpan={columns.length + 1} class="bg-gray-50 px-6 py-4 text-sm text-gray-700">
-                      {expanded_content(row)}
+                      {expand_content(row)}
                     </td>
                   </tr>
-                )} */}
+                )}
               </>
             ))}
           </TableBody>

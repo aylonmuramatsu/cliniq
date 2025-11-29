@@ -1,23 +1,20 @@
+import { app } from '@/Application'
+import { NavigationPath } from './enums'
+import { requestApi } from './request-api'
+
 export class Session {
   user: any
   token: string
 
   async validate_token() {
-    // const { data, error } = await requestApi(
-    //   '/authentication/validate-token',
-    //   'get',
-    // )
-    // if (error) {
-    //   return this.logout()
-    // }
-
-    this.create_session({
-      user: {
-        name: 'Aylon Muramatsu',
-        id: '1',
-      },
-      token: btoa(`${Date.now()}-${Math.random()}`),
-    })
+    const { data, error } = await requestApi(
+      '/authentication/validate-token',
+      'get',
+    )
+    if (error) {
+      return this.logout()
+    }
+    this.create_session(data)
   }
 
   create_session(session: any) {
@@ -27,12 +24,12 @@ export class Session {
   }
 
   logout() {
-    this.user = null
-    this.token = null
-    window.localStorage.removeItem('token')
-    // setTimeout(() => {
-    // app.router.url = NavigationPath.Login
-    // }, 200)
+    setTimeout(() => {
+      this.user = null
+      this.token = null
+      window.localStorage.removeItem('token')
+      app.router.url = NavigationPath.Authentication.Login
+    }, 150)
   }
 }
 

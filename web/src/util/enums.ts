@@ -1,29 +1,25 @@
 export const NavigationPath = {
-  Operator: {
-    Dashboard: '/operadora/dashboard',
-    Plan: '/operadora/planos',
-    Beneficiaries: '/operadora/beneficiarios',
-    Authorizations: '/operadora/autorizacoes',
-    Clinics: '/operadora/clinicas',
-    Transfers: '/operadora/repasses',
-    Ticket: '/operadora/atendimentos',
-    Configuration: '/operadora/configuracoes',
+  Admin: {
+    Clinic: '/administrador/clinicas',
+    Users: '/administrador/usuarios',
+    Plan: '/administrador/planos',
   },
-  Clinic: {
-    Dashboard: '/clinica/dashboard',
-    Schedule: '/clinica/agenda',
-    Patients: '/clinica/pacientes',
-    RequestAuthorization: '/clinica/solicitar-autorizacao',
-    Appointments: '/clinica/atendimentos',
-    Transfers: '/clinica/repasses',
-    Profile: '/clinica/perfil',
+  Authentication: {
+    Login: '/login',
   },
-  Patient: {
-    Dashboard: '/paciente/dashboard',
-    Plan: '/paciente/plano',
-    DigitalCard: '/paciente/carteirinha',
-    Schedule: '/paciente/agendar',
-    History: '/paciente/historico',
-    Profile: '/paciente/perfil',
-  },
+} as const
+
+export const UserRole = {
+  Operator: 0,
+  Admin: 1,
+} as const
+
+export const ClinicStatus = {
+  Inactive: 0,
+  Active: 1,
+} as const
+
+export const UserStatus = {
+  Inactive: 0,
+  Active: 1,
 } as const

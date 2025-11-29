@@ -1,2 +1,10 @@
 @import "tailwindcss";
 @import "@insightcreativewebs/utils/theme.css";
+
+.modal-header {
+  @apply border-b-gray-200;
+}
+
+.modal-footer {
+  @apply border-t-gray-200;
+}
