@@ -199,17 +199,15 @@ Se encontrar problemas, verifique:
 2. Logs do terminal (backend e frontend)
 3. Console do navegador (F12)
 4. Status do banco de dados MySQL
-```
 
-Esta documentação cobre:
-- Pré-requisitos
-- Configuração do banco de dados
-- Configuração do backend (variáveis de ambiente, migrations, seeds)
-- Configuração do frontend (variáveis de ambiente)
-- Como iniciar ambos os serviços
-- Comandos úteis
-- Troubleshooting básico
-- Estrutura do projeto
+## Print
 
-Quer que eu crie um arquivo README.md na raiz do projeto com este conteúdo?
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 47 13" src="https://github.com/user-attachments/assets/82ea446a-ea58-45be-8111-60a9181267bf" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 47 32" src="https://github.com/user-attachments/assets/b25ed31e-93e9-4919-ab18-38c5d55d44fc" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 49 21" src="https://github.com/user-attachments/assets/7d1a6fd8-42a8-44f0-aeb6-9b3f03b856ee" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 49 57" src="https://github.com/user-attachments/assets/3ceefbef-84de-499b-8bd4-5ad4b79752c1" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 50 07" src="https://github.com/user-attachments/assets/3e31ffb4-dd10-4584-94d5-ff0c1233cc3b" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 50 50" src="https://github.com/user-attachments/assets/6f081898-ea84-43d2-91bc-a3072b4ba5e1" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 51 04" src="https://github.com/user-attachments/assets/8d694cde-1a32-4591-a414-4c69d65bc138" />
+<img width="500" height="966" alt="Screenshot 2025-12-04 at 11 51 21" src="https://github.com/user-attachments/assets/c27780de-b8f8-4af5-8917-9e0121e6faba" />
 
